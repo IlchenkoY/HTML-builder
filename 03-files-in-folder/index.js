@@ -17,12 +17,12 @@ fs.readdir(folderPath, (err, files) => {
         console.error(err);
         process.exit();
       }
-      const fileSizeInKB = stats.size / 1024;
-      console.log(
-        `${file.split('.')[0]} - ${file.split('.')[1]} - ${fileSizeInKB.toFixed(
-          3,
-        )}kb`,
-      );
+
+      if (stats.isFile()) {
+        const fileSizeInKB = stats.size / 1024;
+        const { name, ext } = path.parse(filePath);
+        console.log(`${name} - ${ext.slice(1)} - ${fileSizeInKB.toFixed(3)}kb`);
+      }
     });
   });
 });
